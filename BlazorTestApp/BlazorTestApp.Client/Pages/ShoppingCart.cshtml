@@ -1,0 +1,52 @@
+﻿@page "/shoppingcart"
+@inject IShoppingCartService shoppingCartService
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col" @onclick(() => OnSort(nameof(ShoppingCartItem.Title)))>Title</th>
+            <th scope="col">Unit price</th>
+            <th scope="col">Units</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ShoppingCartItems)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.Units</td>
+                <td>@(item.Units * item.UnitPrice)</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3">Total</td>
+            <td>@(ShoppingCartItems.Sum(sci => sci.Units * sci.UnitPrice))</td>
+        </tr>
+    </tbody>
+</table>
+
+@functions{
+    IEnumerable<ShoppingCartItem> ShoppingCartItems = Enumerable.Empty<ShoppingCartItem>();
+    protected override async Task OnInitAsync()
+    {
+        ShoppingCartItems = await shoppingCartService.GetItemsAsync();
+    }
+
+    void OnSort(string columnName)
+    {
+        switch (columnName)
+        {
+            case nameof(ShoppingCartItem.Title):
+                ShoppingCartItems = ShoppingCartItems.OrderBy(sc => sc.Title);
+                break;
+            case nameof(ShoppingCartItem.UnitPrice):
+                break;
+            case nameof(ShoppingCartItem.Units):
+                break;
+            case "Total":
+                break;
+        }
+    }
+}

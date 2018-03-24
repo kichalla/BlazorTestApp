@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Blazor.Browser.Rendering;
 using Microsoft.AspNetCore.Blazor.Browser.Services;
 using System;
+using Microsoft.Extensions.DependencyInjection;
+using BlazorTestApp.Client.Services;
 
 namespace BlazorTestApp.Client
 {
@@ -10,7 +12,7 @@ namespace BlazorTestApp.Client
         {
             var serviceProvider = new BrowserServiceProvider(configure =>
             {
-                // Add any custom services here
+                configure.AddSingleton<IShoppingCartService, ShoppingCartService>();
             });
 
             new BrowserRenderer(serviceProvider).AddComponent<App>("app");

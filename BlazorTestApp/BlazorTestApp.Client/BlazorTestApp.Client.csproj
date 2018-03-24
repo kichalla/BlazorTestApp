@@ -15,4 +15,16 @@
     <ProjectReference Include="..\BlazorTestApp.Shared\BlazorTestApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\ShoppingCart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\ShoppingCart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\ShoppingCart.cshtml" />
+  </ItemGroup>
+
 </Project>
